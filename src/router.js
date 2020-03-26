@@ -17,7 +17,7 @@ import Settings from './routes/authenticated/settings';
 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 //Components
-import Loading from './components/animated/loading';
+// import Loading from './components/animated/loading';
 import MenuButton from './components/static/menuButton';
 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
@@ -66,25 +66,31 @@ function Authenticated() {
   );
 }
 
-function Container() {
+function AuthenticatedContainer() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName={IsSignedIn() ? 'Authenticated' : 'Unauthenticated'}
-        headerMode="none">
-        <Stack.Screen name="Unauthenticated" component={Unauthenticated} />
-        <Stack.Screen name="Authenticated" component={Authenticated} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Stack.Navigator initialRouteName="Authenticated" headerMode="none">
+      <Stack.Screen name="Unauthenticated" component={Unauthenticated} />
+      <Stack.Screen name="Authenticated" component={Authenticated} />
+    </Stack.Navigator>
+  );
+}
+
+function UnauthenticatedContainer() {
+  return (
+    <Stack.Navigator initialRouteName="Unauthenticated" headerMode="none">
+      <Stack.Screen name="Unauthenticated" component={Unauthenticated} />
+      <Stack.Screen name="Authenticated" component={Authenticated} />
+    </Stack.Navigator>
   );
 }
 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 //Auth logic
 export default function() {
-  const loading = false;
-  console.log(IsSignedIn());
-
-  return loading ? <Loading /> : <Container />;
+  return (
+    <NavigationContainer>
+      {IsSignedIn() ? <AuthenticatedContainer /> : <UnauthenticatedContainer />}
+    </NavigationContainer>
+  );
 }
 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

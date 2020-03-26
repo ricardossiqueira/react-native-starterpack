@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 export default function() {
   const [value, setValue] = React.useState();
-  AsyncStorage.getItem('ACCESS_TOKEN').then(response => {
+  AsyncStorage.getItem('REFRESH_TOKEN').then(response => {
     setValue(response);
   });
   return (

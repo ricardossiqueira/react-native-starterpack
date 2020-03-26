@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
 import * as keys from '../constants/asyncstorageKeys';
+import {keepConnected} from './api';
 
 export async function OnSignIn({access_token, refresh_token}) {
   await AsyncStorage.setItem(keys.ACCESS_TOKEN, access_token);
@@ -15,6 +16,7 @@ export function IsSignedIn() {
     setRefreshToken(response),
   );
   if (refresh_token) {
+    keepConnected({refresh_token: refresh_token});
     return true;
   } else {
     return false;
@@ -23,6 +25,7 @@ export function IsSignedIn() {
 
 export async function OnSignOut() {
   try {
+    AsyncStorage.removeItem(keys.ACCESS_TOKEN);
     AsyncStorage.removeItem(keys.REFRESH_TOKEN);
   } catch {
     e => null;
