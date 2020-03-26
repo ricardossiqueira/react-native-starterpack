@@ -1,17 +1,26 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text, StyleSheet, Button} from 'react-native';
-import {OnSignIn} from '../../services/auth';
+import {handleLogin} from '../../services/api';
+import {TextInput} from 'react-native-gesture-handler';
 
 export default function({navigation}) {
+  const [email, setEmail] = useState('ricardosantossiqueira@poli.ufrj.br');
+  const [password, setPassword] = useState('ricardossiqueiraC7708ec7708e#');
+
   return (
     <View style={styles.center}>
       <Text>Login</Text>
+      <TextInput placeholder="Email" onChangeText={value => setEmail(value)} />
+      <TextInput
+        placeholder="Password"
+        onChangeText={value => setPassword(value)}
+      />
       <Button
         title="Login"
         onPress={async () =>
-          OnSignIn({
-            access_token: 'dummy_access_token',
-            refresh_token: 'dummy_refresh_token',
+          handleLogin({
+            email: email,
+            password: password,
           }).then(() => navigation.navigate('Authenticated', {screen: 'Home'}))
         }
       />

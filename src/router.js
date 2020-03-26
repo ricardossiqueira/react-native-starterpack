@@ -83,6 +83,7 @@ function Container() {
 //Auth logic
 export default function() {
   const loading = false;
+  console.log(IsSignedIn());
 
   return loading ? <Loading /> : <Container />;
 }

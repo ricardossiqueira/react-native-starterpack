@@ -1,4 +1,4 @@
-# React-Native Starterpack
+#  React Native Starterpack
 Starterpack escalável para qualquer projeto.
 
 ## Instalação
@@ -25,6 +25,10 @@ git clone https://github.com/ricardossiqueira/react-native-starterpack.git && cd
 * **React Native Gesture Handler**
 * **React Redux**
 * **Redux**
+
+## Formatação
+Você deve usar o [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) e o [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) para formatar seu código, utilizando o padrão do @react-native-community/eslint-config
+
 
 ## Contribuição
 Contribuam para manter esse repo sempre atualizado para todos! :+1:
