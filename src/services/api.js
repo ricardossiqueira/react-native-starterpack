@@ -20,7 +20,6 @@ export async function handleLogin({email, password}) {
         refresh_token: response.data.refresh_token,
       });
     })
-    .then(console.log('fetch done!'))
     .catch(e => console.log(e));
 }
 

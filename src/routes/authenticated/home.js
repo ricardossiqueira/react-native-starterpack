@@ -1,15 +1,19 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
+import wichTheme from '../../hooks/static/wichTheme';
 
-export default function() {
+export default function({navigation}) {
   const [value, setValue] = React.useState();
   AsyncStorage.getItem('REFRESH_TOKEN').then(response => {
     setValue(response);
   });
+
+  const theme = wichTheme();
+
   return (
-    <View style={styles.center}>
-      <Text>access token: {value}</Text>
+    <View style={[styles.center, {backgroundColor: theme.primary}]}>
+      <Text style={{color: theme.font}}>access token: {value}</Text>
     </View>
   );
 }

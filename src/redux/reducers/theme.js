@@ -1,12 +1,12 @@
 import * as actionTypes from '../actions/actions';
 
 const initialState = {
-  data: [],
+  data: {theme: 'default'},
 };
 
-export function reducer(state = initialState, action) {
+export function themeReducer(state = initialState, action) {
   switch (action.type) {
-    case actionTypes.ADD_DATA:
+    case actionTypes.SWITCH_THEME:
       return {
         ...state,
         data: action.payload,
