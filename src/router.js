@@ -1,5 +1,6 @@
 //lib imports
 import React from 'react';
+import {Text} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
@@ -18,6 +19,12 @@ import Settings from './routes/authenticated/settings';
 
 //Components
 // import Loading from './components/animated/loading';
+import CustomDrawer from './components/static/customDrawer';
+import Icon from 'react-native-vector-icons/Feather';
+//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+//Hooks
+import useTheme from './hooks/static/useTheme';
 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 //Auth
@@ -52,11 +59,36 @@ function Unauthenticated() {
   );
 }
 
-function Authenticated() {
+function Authenticated({navigation}) {
+  const theme = useTheme();
   return (
-    <Drawer.Navigator>
-      <Drawer.Screen name="Home" component={HomeWithHeader} />
-      <Drawer.Screen name="Settings" component={SettingsWithHeader} />
+    <Drawer.Navigator
+      drawerType="slide"
+      initialRouteName="Home"
+      drawerContent={props => (
+        <CustomDrawer props={props} navigation={navigation} />
+      )}
+      drawerContentOptions={{
+        activeTintColor: theme.font,
+        activeBackgroundColor: theme.primary,
+      }}>
+      <Drawer.Screen
+        name="Home"
+        component={HomeWithHeader}
+        options={{
+          drawerIcon: () => <Icon name="home" size={25} color={theme.font} />,
+        }}
+      />
+      <Drawer.Screen
+        name="Settings"
+        component={SettingsWithHeader}
+        options={{
+          drawerIcon: () => (
+            <Icon name="settings" size={25} color={theme.font} />
+          ),
+          drawerLabel: () => <Text style={{color: theme.font}}>Settings</Text>,
+        }}
+      />
     </Drawer.Navigator>
   );
 }

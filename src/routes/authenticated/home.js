@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import wichTheme from '../../hooks/static/wichTheme';
+import useTheme from '../../hooks/static/useTheme';
 
 export default function({navigation}) {
   const [value, setValue] = React.useState();
@@ -9,7 +9,7 @@ export default function({navigation}) {
     setValue(response);
   });
 
-  const theme = wichTheme();
+  const theme = useTheme();
 
   return (
     <View style={[styles.center, {backgroundColor: theme.base}]}>

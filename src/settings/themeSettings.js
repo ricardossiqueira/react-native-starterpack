@@ -9,7 +9,7 @@ export function setThemeDefault() {
   AsyncStorage.setItem(keys.THEME, 'default');
 }
 
-export function wichTheme() {
+export function useTheme() {
   AsyncStorage.getItem(keys.THEME).then(response => {
     return response;
   });

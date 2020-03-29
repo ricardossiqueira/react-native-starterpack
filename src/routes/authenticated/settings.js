@@ -2,7 +2,7 @@ import React from 'react';
 import {Button, View, Text, StyleSheet} from 'react-native';
 import {OnSignOut} from '../../services/auth';
 import {useSelector} from 'react-redux';
-import wichTheme from '../../hooks/static/wichTheme';
+import useTheme from '../../hooks/static/useTheme';
 import ThemeSwitch from '../../components/static/themeSwitch';
 
 export default function({navigation}) {
@@ -10,7 +10,7 @@ export default function({navigation}) {
     return state.theme;
   });
 
-  const theme = wichTheme();
+  const theme = useTheme();
 
   return (
     <View style={[styles.center, {backgroundColor: theme.base}]}>
