@@ -12,7 +12,7 @@ export default function({navigation}) {
   const theme = wichTheme();
 
   return (
-    <View style={[styles.center, {backgroundColor: theme.primary}]}>
+    <View style={[styles.center, {backgroundColor: theme.base}]}>
       <Text style={{color: theme.font}}>access token: {value}</Text>
     </View>
   );

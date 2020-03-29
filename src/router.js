@@ -18,11 +18,11 @@ import Settings from './routes/authenticated/settings';
 
 //Components
 // import Loading from './components/animated/loading';
-import MenuButton from './components/static/menuButton';
 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 //Auth
 import {IsSignedIn} from './services/auth';
+import WithHeader from './components/static/withHeader';
 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 //Create stack types
@@ -33,16 +33,11 @@ const Drawer = createDrawerNavigator();
 
 //Add header to a drawer screen
 function HomeWithHeader({navigation}) {
+  return <WithHeader name="Home" component={Home} navigation={navigation} />;
+}
+function SettingsWithHeader({navigation}) {
   return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Home"
-        component={Home}
-        options={{
-          headerLeft: () => <MenuButton navigation={navigation} />,
-        }}
-      />
-    </Stack.Navigator>
+    <WithHeader name="Settings" component={Settings} navigation={navigation} />
   );
 }
 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -61,11 +56,13 @@ function Authenticated() {
   return (
     <Drawer.Navigator>
       <Drawer.Screen name="Home" component={HomeWithHeader} />
-      <Drawer.Screen name="Settings" component={Settings} />
+      <Drawer.Screen name="Settings" component={SettingsWithHeader} />
     </Drawer.Navigator>
   );
 }
+//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
+//Navigation containers
 function AuthenticatedContainer() {
   return (
     <Stack.Navigator initialRouteName="Authenticated" headerMode="none">
