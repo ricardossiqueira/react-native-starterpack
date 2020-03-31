@@ -1,11 +1,10 @@
 import * as actionTypes from '../actions/actions';
 
 const initialState = {
-  data: [
-    {
-      loading: true,
-    },
-  ],
+  data: {
+    loading: null,
+    access_token: null,
+  },
 };
 
 export function authReducer(state = initialState, action) {

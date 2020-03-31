@@ -1,9 +1,12 @@
 import React from 'react';
-import {Switch} from 'react-native';
+import {StyleSheet, TouchableOpacity} from 'react-native';
+import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import useTheme from '../../hooks/static/useTheme';
 import {useDispatch, useSelector} from 'react-redux';
 import * as actionTypes from '../../redux/actions/actions';
 
 export default function() {
+  const theme = useTheme();
   const dispatch = useDispatch();
 
   const {data} = useSelector(state => {
@@ -23,10 +26,23 @@ export default function() {
 
   return (
     <>
-      <Switch
-        onValueChange={() => toggleTheme()}
-        value={data.theme === 'default' ? false : true}
-      />
+      <TouchableOpacity
+        onPress={() => {
+          toggleTheme();
+        }}>
+        <MaterialIcon
+          name="theme-light-dark"
+          size={30}
+          color={theme.font}
+          style={styles.icon}
+        />
+      </TouchableOpacity>
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  icon: {
+    marginRight: 15,
+  },
+});

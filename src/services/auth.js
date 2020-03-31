@@ -5,24 +5,34 @@ import {keepConnected} from './api';
 import {useDispatch} from 'react-redux';
 import * as actionTypes from '../redux/actions/actions';
 
-export async function OnSignIn({access_token, refresh_token}) {
-  await AsyncStorage.setItem(keys.ACCESS_TOKEN, access_token);
-  refresh_token
-    ? await AsyncStorage.setItem(keys.REFRESH_TOKEN, refresh_token)
-    : null;
-}
-
 export function IsSignedIn() {
   const [refresh_token, setRefreshToken] = useState();
+  const [access_token, setAccessToken] = useState();
+
   AsyncStorage.getItem(keys.REFRESH_TOKEN).then(response =>
     setRefreshToken(response),
   );
-  useDispatch({type: actionTypes.IS_LOADING, payload: false});
+  AsyncStorage.getItem(keys.ACCESS_TOKEN).then(response =>
+    setAccessToken(response),
+  );
+
+  const dispatch = useDispatch();
+
   if (refresh_token) {
     keepConnected({refresh_token: refresh_token});
-    return true;
+    dispatch({
+      type: actionTypes.IS_LOADING,
+      payload: {
+        loading: false,
+        access_token: access_token,
+        refresh_token: refresh_token,
+      },
+    });
   } else {
-    return false;
+    dispatch({
+      type: actionTypes.IS_LOADING,
+      payload: {loading: false, access_token: null, refresh_token: null},
+    });
   }
 }
 

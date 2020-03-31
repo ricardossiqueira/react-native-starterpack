@@ -3,7 +3,7 @@ import {TouchableOpacity, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import useTheme from '../../hooks/static/useTheme';
 
-function MenuButton({navigation}) {
+function ToggleDrawer({navigation}) {
   const theme = useTheme();
 
   return (
@@ -24,4 +24,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MenuButton;
+export default ToggleDrawer;

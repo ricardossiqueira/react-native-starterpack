@@ -1,6 +1,6 @@
 //lib imports
 import React from 'react';
-import {Text} from 'react-native';
+import {Text, StatusBar} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
@@ -10,6 +10,7 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 //Unauthenticated screens
 import Login from './routes/unauthenticated/login';
 import ResetPassword from './routes/unauthenticated/resetPassword';
+import SignUp from './routes/unauthenticated/signup';
 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 //Authenticated screens
@@ -18,13 +19,15 @@ import Settings from './routes/authenticated/settings';
 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 //Components
-// import Loading from './components/animated/loading';
+import Loading from './components/animated/loading';
 import CustomDrawer from './components/static/customDrawer';
-import Icon from 'react-native-vector-icons/Feather';
+import FeatherIcon from 'react-native-vector-icons/Feather';
+import SetTheme from './components/static/setTheme';
 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 //Hooks
 import useTheme from './hooks/static/useTheme';
+import {useSelector} from 'react-redux';
 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 //Auth
@@ -51,10 +54,45 @@ function SettingsWithHeader({navigation}) {
 
 //Nested navigators
 function Unauthenticated() {
+  const theme = useTheme();
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="ResetPassword" component={ResetPassword} />
+      <Stack.Screen
+        name="Login"
+        component={Login}
+        options={{
+          headerTitle: 'Login',
+          headerRight: () => <SetTheme />,
+          headerStyle: {
+            backgroundColor: theme.primary,
+          },
+          headerTintColor: theme.font,
+        }}
+      />
+      <Stack.Screen
+        name="ResetPassword"
+        component={ResetPassword}
+        options={{
+          headerTitle: 'Reset Password',
+          headerRight: () => <SetTheme />,
+          headerStyle: {
+            backgroundColor: theme.primary,
+          },
+          headerTintColor: theme.font,
+        }}
+      />
+      <Stack.Screen
+        name="SignUp"
+        component={SignUp}
+        options={{
+          headerTitle: 'Sign Up',
+          headerRight: () => <SetTheme />,
+          headerStyle: {
+            backgroundColor: theme.primary,
+          },
+          headerTintColor: theme.font,
+        }}
+      />
     </Stack.Navigator>
   );
 }
@@ -76,7 +114,9 @@ function Authenticated({navigation}) {
         name="Home"
         component={HomeWithHeader}
         options={{
-          drawerIcon: () => <Icon name="home" size={25} color={theme.font} />,
+          drawerIcon: () => (
+            <FeatherIcon name="home" size={25} color={theme.font} />
+          ),
         }}
       />
       <Drawer.Screen
@@ -84,7 +124,7 @@ function Authenticated({navigation}) {
         component={SettingsWithHeader}
         options={{
           drawerIcon: () => (
-            <Icon name="settings" size={25} color={theme.font} />
+            <FeatherIcon name="settings" size={25} color={theme.font} />
           ),
           drawerLabel: () => <Text style={{color: theme.font}}>Settings</Text>,
         }}
@@ -116,10 +156,24 @@ function UnauthenticatedContainer() {
 
 //Auth logic
 export default function() {
+  const theme = useTheme();
+  const {data} = useSelector(state => {
+    return state.auth;
+  });
+
   return (
-    <NavigationContainer>
-      {IsSignedIn() ? <AuthenticatedContainer /> : <UnauthenticatedContainer />}
-    </NavigationContainer>
+    <>
+      <StatusBar backgroundColor={theme.dark} barStyle={theme.statusBar} />
+      <NavigationContainer>
+        {data.loading ? (
+          <Loading />
+        ) : data.access_token ? (
+          <AuthenticatedContainer />
+        ) : (
+          <UnauthenticatedContainer />
+        )}
+      </NavigationContainer>
+    </>
   );
 }
 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

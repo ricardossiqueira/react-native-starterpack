@@ -1,12 +1,12 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import MenuButton from './menuButton';
+import ToggleDrawer from './toggleDrawer';
 import ProfileButton from './profileButton';
 import useTheme from '../../hooks/static/useTheme';
 
 const Stack = createStackNavigator();
 
-function WithHeader({navigation, name, component}) {
+function WithHeader({navigation, name, component, headerLeft, headerRight}) {
   const theme = useTheme();
   return (
     <Stack.Navigator>
@@ -14,7 +14,7 @@ function WithHeader({navigation, name, component}) {
         name={name}
         component={component}
         options={{
-          headerLeft: () => <MenuButton navigation={navigation} />,
+          headerLeft: () => <ToggleDrawer navigation={navigation} />,
           headerRight: () => <ProfileButton navigation={navigation} />,
           headerStyle: {
             backgroundColor: theme.primary,
