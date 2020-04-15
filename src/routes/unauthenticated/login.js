@@ -5,7 +5,7 @@ import {TextInput} from 'react-native-gesture-handler';
 
 export default function({navigation}) {
   const [email, setEmail] = useState('ricardosantossiqueira@poli.ufrj.br');
-  const [password, setPassword] = useState('ricardossiqueiraC7708ec7708e#');
+  const [password, setPassword] = useState('');
 
   return (
     <View style={styles.center}>
