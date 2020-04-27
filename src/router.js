@@ -4,7 +4,6 @@ import {Text, StatusBar} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-// import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 //Unauthenticated screens
@@ -27,11 +26,9 @@ import SetTheme from './components/static/setTheme';
 
 //Hooks
 import useTheme from './hooks/static/useTheme';
-import {useSelector} from 'react-redux';
 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 //Auth
-import {IsSignedIn} from './services/auth';
 import WithHeader from './components/static/withHeader';
 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
@@ -157,21 +154,14 @@ function UnauthenticatedContainer() {
 //Auth logic
 export default function() {
   const theme = useTheme();
-  const {data} = useSelector(state => {
-    return state.auth;
-  });
 
   return (
     <>
       <StatusBar backgroundColor={theme.dark} barStyle={theme.statusBar} />
       <NavigationContainer>
-        {data.loading ? (
-          <Loading />
-        ) : data.access_token ? (
-          <AuthenticatedContainer />
-        ) : (
-          <UnauthenticatedContainer />
-        )}
+        {/* <Loading /> */}
+        <AuthenticatedContainer />
+        {/* <UnauthenticatedContainer /> */}
       </NavigationContainer>
     </>
   );
