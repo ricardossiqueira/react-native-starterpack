@@ -1,5 +1,5 @@
-export const ADD_DATA = 'ADD_DATA';
-export const ON_LOGIN = 'ON_LOGIN';
-export const ON_LOGOUT = 'ON_LOGOUT';
-export const IS_LOADING = 'IS_LOADING';
 export const SWITCH_THEME = 'SWITCH_THEME';
+export const LOGIN_REQUEST = 'LOGIN_REQUEST';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAILURE = 'LOGIN_FAILURE';
+export const LOG_OUT = 'LOG_OUT';

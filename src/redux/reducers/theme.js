@@ -1,7 +1,9 @@
 import * as actionTypes from '../actions/actions';
 
 const initialState = {
-  data: {theme: 'default'},
+  data: {
+    theme: 'default',
+  },
 };
 
 export function themeReducer(state = initialState, action) {

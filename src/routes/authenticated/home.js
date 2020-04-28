@@ -1,20 +1,26 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
-import wichTheme from '../../hooks/static/wichTheme';
+import {View, StyleSheet, Text} from 'react-native';
+import useTheme from '../../hooks/static/useTheme';
+import {useSelector} from 'react-redux';
 
-export default function({navigation}) {
-  const [value, setValue] = React.useState();
-  AsyncStorage.getItem('REFRESH_TOKEN').then(response => {
-    setValue(response);
+export default function({}) {
+  const theme = useTheme();
+
+  const {data} = useSelector(state => {
+    return state.auth;
   });
 
-  const theme = wichTheme();
-
   return (
-    <View style={[styles.center, {backgroundColor: theme.primary}]}>
-      <Text style={{color: theme.font}}>access token: {value}</Text>
-    </View>
+    <>
+      <View style={[styles.center, {backgroundColor: theme.base}]}>
+        <Text style={[{color: theme.font}]}>
+          access_token: {data.access_token}
+        </Text>
+        <Text style={[{color: theme.font}]}>
+          refresh_token: {data.refresh_token}
+        </Text>
+      </View>
+    </>
   );
 }
 

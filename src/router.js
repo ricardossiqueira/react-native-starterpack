@@ -1,96 +1,51 @@
 //lib imports
-import React from 'react';
+import React, {useEffect} from 'react';
+import {StatusBar} from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
 import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-import {createDrawerNavigator} from '@react-navigation/drawer';
-// import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+import AsyncStorage from '@react-native-community/async-storage';
 
-//Unauthenticated screens
-import Login from './routes/unauthenticated/login';
-import ResetPassword from './routes/unauthenticated/resetPassword';
-//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+import * as keys from './constants/asyncstorageKeys';
+import * as actionTypes from './redux/actions/actions';
 
-//Authenticated screens
-import Home from './routes/authenticated/home';
-import Settings from './routes/authenticated/settings';
-//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+import Loading from './components/animated/loading';
+import Authenticated from './authenticated.router';
+import Unauthenticated from './unauthenticated.router';
 
-//Components
-// import Loading from './components/animated/loading';
-import MenuButton from './components/static/menuButton';
-//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+import useTheme from './hooks/static/useTheme';
+import {isAuthenticated} from './services/auth';
 
-//Auth
-import {IsSignedIn} from './services/auth';
-//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-
-//Create stack types
-const Stack = createStackNavigator();
-const Drawer = createDrawerNavigator();
-// const BottomTab = createBottomTabNavigator();
-//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-
-//Add header to a drawer screen
-function HomeWithHeader({navigation}) {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Home"
-        component={Home}
-        options={{
-          headerLeft: () => <MenuButton navigation={navigation} />,
-        }}
-      />
-    </Stack.Navigator>
-  );
-}
-//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-
-//Nested navigators
-function Unauthenticated() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="ResetPassword" component={ResetPassword} />
-    </Stack.Navigator>
-  );
-}
-
-function Authenticated() {
-  return (
-    <Drawer.Navigator>
-      <Drawer.Screen name="Home" component={HomeWithHeader} />
-      <Drawer.Screen name="Settings" component={Settings} />
-    </Drawer.Navigator>
-  );
-}
-
-function AuthenticatedContainer() {
-  return (
-    <Stack.Navigator initialRouteName="Authenticated" headerMode="none">
-      <Stack.Screen name="Unauthenticated" component={Unauthenticated} />
-      <Stack.Screen name="Authenticated" component={Authenticated} />
-    </Stack.Navigator>
-  );
-}
-
-function UnauthenticatedContainer() {
-  return (
-    <Stack.Navigator initialRouteName="Unauthenticated" headerMode="none">
-      <Stack.Screen name="Unauthenticated" component={Unauthenticated} />
-      <Stack.Screen name="Authenticated" component={Authenticated} />
-    </Stack.Navigator>
-  );
-}
-//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-
-//Auth logic
 export default function() {
+  const dispatch = useDispatch();
+  const theme = useTheme();
+
+  const {data} = useSelector(state => {
+    return state.auth;
+  });
+
+  useEffect(() => {
+    isAuthenticated({dispatch: dispatch});
+  }, [dispatch]);
+
+  useEffect(() => {
+    AsyncStorage.getItem(keys.THEME).then(response => {
+      dispatch({type: actionTypes.SWITCH_THEME, payload: {theme: response}});
+    });
+  }, [dispatch]);
+
   return (
-    <NavigationContainer>
-      {IsSignedIn() ? <AuthenticatedContainer /> : <UnauthenticatedContainer />}
-    </NavigationContainer>
+    <>
+      <StatusBar backgroundColor={theme.dark} barStyle={theme.statusBar} />
+      <NavigationContainer>
+        {data.loading ? (
+          <Loading />
+        ) : data.access_token ? (
+          <Authenticated />
+        ) : (
+          <Unauthenticated />
+        )}
+      </NavigationContainer>
+    </>
   );
 }
 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
