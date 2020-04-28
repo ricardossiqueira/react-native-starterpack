@@ -8,8 +8,8 @@ import {
 import {useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/Feather';
 
-import * as actionTypes from '../../redux/actions/actions';
 import useTheme from '../../hooks/static/useTheme';
+import {handleLogout} from '../../services/api';
 
 function CustomDrawer({navigation, props}) {
   const dispatch = useDispatch();
@@ -47,7 +47,7 @@ function CustomDrawer({navigation, props}) {
           label={() => <Text style={{color: theme.font}}>Logout</Text>}
           activateTintColor={theme.primary}
           onPress={() => {
-            dispatch({type: actionTypes.LOG_OUT});
+            handleLogout({dispatch: dispatch});
           }}
         />
       </DrawerContentScrollView>

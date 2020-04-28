@@ -5,6 +5,7 @@ const initialState = {
     access_token: null,
     refresh_token: null,
     loading: false,
+    keepConnected: false,
   },
 };
 
@@ -20,6 +21,11 @@ export function authReducer(state = initialState, action) {
         ...state,
         data: action.payload,
       };
+    case actionTypes.LOGIN_FAILURE:
+      return {
+        ...state,
+        data: action.payload,
+      };
     case actionTypes.LOG_OUT:
       return {
         ...state,
@@ -27,6 +33,7 @@ export function authReducer(state = initialState, action) {
           access_token: null,
           refresh_token: null,
           loading: false,
+          keepConnected: false,
         },
       };
   }

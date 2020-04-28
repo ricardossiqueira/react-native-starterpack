@@ -14,6 +14,7 @@ export default function({}) {
     <>
       <View style={[styles.center, {backgroundColor: theme.base}]}>
         <Text>access_token: {data.access_token}</Text>
+        <Text>refresh_token: {data.refresh_token}</Text>
       </View>
     </>
   );

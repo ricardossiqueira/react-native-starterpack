@@ -1,11 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, Button, Animated, Keyboard} from 'react-native';
-import {TextInput} from 'react-native-gesture-handler';
+import {View, StyleSheet, Button, Keyboard, Text} from 'react-native';
+import {TextInput, TouchableOpacity} from 'react-native-gesture-handler';
 import LottieView from 'lottie-react-native';
+import CheckBox from '@react-native-community/checkbox';
 
 import useTheme from '../../hooks/static/useTheme';
-import {screenWidth} from '../../constants/dimensions';
-import {useSize} from '../../hooks/animated/useSize';
 import {handleLogin} from '../../services/api';
 import {useDispatch} from 'react-redux';
 
@@ -13,16 +12,10 @@ export default function({navigation}) {
   const [email, setEmail] = useState('ricardosantossiqueira@poli.ufrj.br');
   const [password, setPassword] = useState('ricardossiqueiraC7708ec7708e#');
   const [animationDirection, setAnimationDirection] = useState(true);
+  const [keepConnected, setKeepConnected] = useState(false);
 
   const dispatch = useDispatch();
   const theme = useTheme();
-  const size = useSize({
-    initialValue: screenWidth * 0.5,
-    finalValue: screenWidth * 0.8,
-    duration: 200,
-    grow: animationDirection,
-    trigger: animationDirection,
-  });
 
   useEffect(() => {
     function triggerAnimation() {
@@ -35,19 +28,19 @@ export default function({navigation}) {
   return (
     <>
       <View style={[styles.animatedWrapper, {backgroundColor: theme.base}]}>
-        <Animated.View
-          style={[
-            styles.animatedContainer,
-            {width: size, height: size, backgroundColor: theme.base},
-          ]}>
-          <LottieView
-            source={require('../../assets/lottie/developer.json')}
-            autoPlay
-            loop
-            style={{backgroundColor: theme.base}}
-          />
-        </Animated.View>
+        {animationDirection && (
+          <View
+            style={[styles.animatedContainer, {backgroundColor: theme.base}]}>
+            <LottieView
+              source={require('../../assets/lottie/developer.json')}
+              autoPlay
+              loop
+              style={{backgroundColor: theme.base}}
+            />
+          </View>
+        )}
       </View>
+
       <View style={[styles.center, {backgroundColor: theme.base}]}>
         <TextInput
           placeholder="Email"
@@ -57,6 +50,14 @@ export default function({navigation}) {
           placeholder="Password"
           onChangeText={value => setPassword(value)}
         />
+
+        <TouchableOpacity onPress={() => setKeepConnected(!keepConnected)}>
+          <View style={styles.checkbox}>
+            <CheckBox value={keepConnected} />
+            <Text>Mantenha- me conectado</Text>
+          </View>
+        </TouchableOpacity>
+
         <Button
           title="Login"
           onPress={() => {
@@ -64,6 +65,7 @@ export default function({navigation}) {
               email: email,
               password: password,
               dispatch: dispatch,
+              keepConnected: keepConnected,
             });
           }}
         />
@@ -89,8 +91,14 @@ const styles = StyleSheet.create({
   animatedContainer: {
     flex: 0,
     alignSelf: 'center',
+    width: 300,
+    height: 300,
   },
   animatedWrapper: {
     flex: 0,
+  },
+  checkbox: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
