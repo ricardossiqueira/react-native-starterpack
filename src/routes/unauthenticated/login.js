@@ -9,8 +9,8 @@ import {handleLogin} from '../../services/auth';
 import {useDispatch} from 'react-redux';
 
 export default function({navigation}) {
-  const [email, setEmail] = useState('ricardosantossiqueira@poli.ufrj.br');
-  const [password, setPassword] = useState('ricardossiqueiraC7708ec7708e#');
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
   const [animationDirection, setAnimationDirection] = useState(true);
   const [keepConnected, setKeepConnected] = useState(false);
 
