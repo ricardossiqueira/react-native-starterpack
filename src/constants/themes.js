@@ -2,6 +2,7 @@ import React from 'react';
 
 const themes = {
   default: {
+    id: 'default',
     statusBar: 'dark-content',
     primary: '#01e292',
     light: '#65ffc3',
@@ -11,6 +12,7 @@ const themes = {
     base: '#f5f5f5',
   },
   dark: {
+    id: 'dark',
     statusBar: 'light-content',
     primary: '#212121',
     light: '#484848',

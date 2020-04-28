@@ -13,8 +13,12 @@ export default function({}) {
   return (
     <>
       <View style={[styles.center, {backgroundColor: theme.base}]}>
-        <Text>access_token: {data.access_token}</Text>
-        <Text>refresh_token: {data.refresh_token}</Text>
+        <Text style={[{color: theme.font}]}>
+          access_token: {data.access_token}
+        </Text>
+        <Text style={[{color: theme.font}]}>
+          refresh_token: {data.refresh_token}
+        </Text>
       </View>
     </>
   );

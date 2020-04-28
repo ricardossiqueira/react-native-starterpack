@@ -1,25 +1,19 @@
 import React from 'react';
-import {Button, View, Text, StyleSheet} from 'react-native';
-import {useSelector} from 'react-redux';
+import {Button, View, StyleSheet} from 'react-native';
+import {useDispatch} from 'react-redux';
 import useTheme from '../../hooks/static/useTheme';
-import ThemeSwitch from '../../components/static/themeSwitch';
+import ThemeButton from '../../components/static/setTheme';
+import {handleLogout} from '../../services/auth';
 
 export default function({navigation}) {
-  const {data} = useSelector(state => {
-    return state.theme;
-  });
+  const dispatch = useDispatch();
 
   const theme = useTheme();
 
   return (
     <View style={[styles.center, {backgroundColor: theme.base}]}>
-      <Text style={[{color: theme.font}]}>Settings</Text>
-      <Text style={[{color: theme.font}]}>{data.theme}</Text>
-      <ThemeSwitch />
-      <Button
-        title="Exit"
-        onPress={navigation.navigate('Unauthenticated', {screen: 'Login'})}
-      />
+      <ThemeButton />
+      <Button title="Exit" onPress={() => handleLogout({dispatch: dispatch})} />
     </View>
   );
 }

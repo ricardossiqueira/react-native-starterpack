@@ -10,6 +10,7 @@ import Settings from './routes/authenticated/settings';
 import CustomDrawer from './components/static/customDrawer';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import WithHeader from './components/static/withHeader';
+import HeaderButton from './components/static/header.button';
 
 //Hooks
 import useTheme from './hooks/static/useTheme';
@@ -19,11 +20,35 @@ const Drawer = createDrawerNavigator();
 
 //Add header to a drawer screen
 function HomeWithHeader({navigation}) {
-  return <WithHeader name="Home" component={Home} navigation={navigation} />;
+  return (
+    <WithHeader
+      name="Home"
+      component={Home}
+      navigation={navigation}
+      headerLeft={
+        <HeaderButton
+          navigation={navigation}
+          iconName="menu"
+          onPress={() => navigation.toggleDrawer()}
+        />
+      }
+    />
+  );
 }
 function SettingsWithHeader({navigation}) {
   return (
-    <WithHeader name="Settings" component={Settings} navigation={navigation} />
+    <WithHeader
+      name="Settings"
+      component={Settings}
+      navigation={navigation}
+      headerLeft={
+        <HeaderButton
+          navigation={navigation}
+          iconName="menu"
+          onPress={() => navigation.toggleDrawer()}
+        />
+      }
+    />
   );
 }
 
