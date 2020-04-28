@@ -5,11 +5,14 @@ import {
   DrawerContentScrollView,
   DrawerItemList,
 } from '@react-navigation/drawer';
+import {useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/Feather';
+
+import * as actionTypes from '../../redux/actions/actions';
 import useTheme from '../../hooks/static/useTheme';
-import {OnSignOut} from '../../services/auth';
 
 function CustomDrawer({navigation, props}) {
+  const dispatch = useDispatch();
   const theme = useTheme();
   const windowDimensions = useWindowDimensions();
 
@@ -43,11 +46,9 @@ function CustomDrawer({navigation, props}) {
           icon={() => <Icon name="log-out" size={25} color={theme.font} />}
           label={() => <Text style={{color: theme.font}}>Logout</Text>}
           activateTintColor={theme.primary}
-          onPress={async () =>
-            OnSignOut().then(() =>
-              navigation.navigate('Unauthenticated', {screen: 'Login'}),
-            )
-          }
+          onPress={() => {
+            dispatch({type: actionTypes.LOG_OUT});
+          }}
         />
       </DrawerContentScrollView>
     </>

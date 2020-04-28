@@ -1,6 +1,5 @@
 import React from 'react';
 import {Button, View, Text, StyleSheet} from 'react-native';
-import {OnSignOut} from '../../services/auth';
 import {useSelector} from 'react-redux';
 import useTheme from '../../hooks/static/useTheme';
 import ThemeSwitch from '../../components/static/themeSwitch';
@@ -19,11 +18,7 @@ export default function({navigation}) {
       <ThemeSwitch />
       <Button
         title="Exit"
-        onPress={async () =>
-          OnSignOut().then(() =>
-            navigation.navigate('Unauthenticated', {screen: 'Login'}),
-          )
-        }
+        onPress={navigation.navigate('Unauthenticated', {screen: 'Login'})}
       />
     </View>
   );

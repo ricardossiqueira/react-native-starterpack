@@ -1,11 +1,22 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Text} from 'react-native';
 import useTheme from '../../hooks/static/useTheme';
+import {useSelector} from 'react-redux';
 
-export default function({navigation}) {
+export default function({}) {
   const theme = useTheme();
 
-  return <View style={[styles.center, {backgroundColor: theme.base}]} />;
+  const {data} = useSelector(state => {
+    return state.auth;
+  });
+
+  return (
+    <>
+      <View style={[styles.center, {backgroundColor: theme.base}]}>
+        <Text>access_token: {data.access_token}</Text>
+      </View>
+    </>
+  );
 }
 
 const styles = StyleSheet.create({

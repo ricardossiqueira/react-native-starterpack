@@ -8,7 +8,6 @@ import {screenWidth} from '../../constants/dimensions';
 import {useSize} from '../../hooks/animated/useSize';
 import {handleLogin} from '../../services/api';
 import {useDispatch} from 'react-redux';
-import * as actionTypes from '../../redux/actions/actions';
 
 export default function({navigation}) {
   const [email, setEmail] = useState('ricardosantossiqueira@poli.ufrj.br');
@@ -61,8 +60,11 @@ export default function({navigation}) {
         <Button
           title="Login"
           onPress={() => {
-            dispatch({type: actionTypes.IS_LOADING, payload: {loading: true}});
-            handleLogin({email: email, password: password});
+            handleLogin({
+              email: email,
+              password: password,
+              dispatch: dispatch,
+            });
           }}
         />
         <Button
