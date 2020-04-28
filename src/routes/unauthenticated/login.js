@@ -5,7 +5,7 @@ import LottieView from 'lottie-react-native';
 import CheckBox from '@react-native-community/checkbox';
 
 import useTheme from '../../hooks/static/useTheme';
-import {handleLogin} from '../../services/api';
+import {handleLogin} from '../../services/auth';
 import {useDispatch} from 'react-redux';
 
 export default function({navigation}) {
@@ -21,6 +21,7 @@ export default function({navigation}) {
     function triggerAnimation() {
       setAnimationDirection(!animationDirection);
     }
+
     Keyboard.addListener('keyboardDidShow', triggerAnimation);
     Keyboard.addListener('keyboardDidHide', triggerAnimation);
   });

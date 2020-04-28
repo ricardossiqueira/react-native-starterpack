@@ -9,7 +9,7 @@ import {useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/Feather';
 
 import useTheme from '../../hooks/static/useTheme';
-import {handleLogout} from '../../services/api';
+import {handleLogout} from '../../services/auth';
 
 function CustomDrawer({navigation, props}) {
   const dispatch = useDispatch();

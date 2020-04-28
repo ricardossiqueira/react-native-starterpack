@@ -34,10 +34,7 @@ git clone https://github.com/ricardossiqueira/react-native-starterpack.git && cd
 - **Redux**
 - **React Native Vector Icons** (falta fazer a configuração para IOS)
 - **Lottie** (falta fazer a configuração para IOS)
-- **Redux Thunk**
-- **[Redux Dev Tools](https://github.com/zalmoxisus/remote-redux-devtools)**
-
-**Obs.:** Para usar o Redux Dev Tools você deve instalar a extensão no browser usado para debugging!
+- **Checkbox**
 
 ## Formatação :writing_hand:
 

@@ -9,7 +9,7 @@ import Authenticated from './authenticated.router';
 import Unauthenticated from './unauthenticated.router';
 
 import useTheme from './hooks/static/useTheme';
-import {isAuthenticated} from './services/api';
+import {isAuthenticated} from './services/auth';
 
 export default function() {
   const dispatch = useDispatch();
